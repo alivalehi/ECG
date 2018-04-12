@@ -1,0 +1,71 @@
+function [cost,cost_terms] = CostFun(x,data)
+version = 1;
+if version == 1
+    Dim = size(data.N,2);
+    size_N = size(data.N,1);
+    size_V = size(data.V,1);
+    size_S = size(data.S,1);
+    size_F = size(data.F,1);
+    NN = size_N+size_V+size_S+size_F;
+    trans_N = repmat(x,size_N,1).*data.N;
+    trans_V = repmat(x,size_V,1).*data.V;
+    trans_S = repmat(x,size_S,1).*data.S;
+    trans_F = repmat(x,size_F,1).*data.F;
+    N_centroid = mean(trans_N);
+    V_centroid = mean(trans_V);
+    S_centroid = mean(trans_S);
+    F_centroid = mean(trans_F);
+    total_centroid = mean([trans_N;trans_V;trans_S;trans_F]);
+    D = pdist2(N_centroid,[V_centroid;S_centroid;F_centroid]);
+    D = D/Dim;
+    SB = sqrt((N_centroid-total_centroid)*(N_centroid-total_centroid)')+...
+         sqrt((V_centroid-total_centroid)*(V_centroid-total_centroid)')+...
+         sqrt((S_centroid-total_centroid)*(S_centroid-total_centroid)')+...
+         sqrt((F_centroid-total_centroid)*(F_centroid-total_centroid)');
+    SW = sqrt(sum(var(trans_N)))+ sqrt(sum(var(trans_V))) + sqrt(sum(var(trans_S)))...
+        + sqrt(sum(var(trans_F)));
+    VSF_dist = pdist([V_centroid;S_centroid;F_centroid]);
+    %cost_terms = [(abs(D(1)-D(3))+abs(D(2)-D(3))+abs(D(1)-D(2))) abs(sum(x)-1) SW/SB SW SB];
+    %cost_terms = [range(D) abs(sum(x)-1) SW/SB SW SB];
+    cost_terms = [range(D) abs(sum(x)-1) SW/SB SW SB];
+    %cost_terms = [0 0 SW/SB 0];
+    %cost_terms = [abs(D(1)-D(3))+abs(D(2)-D(3))+abs(D(1)-D(2)) abs(sum(x)-1) -sum(D) SW];
+    cost = sum(cost_terms(1:3));
+elseif version == 2
+    Dim = size(data.N,2);
+    size_N = size(data.N,1);
+    size_V = size(data.V,1);
+    size_S = size(data.S,1);
+    size_F = size(data.F,1);
+    NN = size_N+size_V+size_S+size_F;
+    trans_N = repmat(x,size_N,1).*data.N;
+    trans_V = repmat(x,size_V,1).*data.V;
+    trans_S = repmat(x,size_S,1).*data.S;
+    trans_F = repmat(x,size_F,1).*data.F;
+    % estimate the tranformed pdf of nornal cluster
+    pd_N = fitdist(trans_N,'Kernel','Kernel','epanechnikov');
+    % calculate the mean likelihood of abnormal samples
+    ll_V = mean(pdf(pd_N, trans_V));
+    ll_S = mean(pdf(pd_N, trans_S));
+    ll_F = mean(pdf(pd_N, trans_F));
+    ll = [ll_V, ll_S, ll_F];
+    
+    % calculate SW/SB term
+    N_centroid = mean(trans_N);
+    V_centroid = mean(trans_V);
+    S_centroid = mean(trans_S);
+    F_centroid = mean(trans_F);
+    total_centroid = mean([trans_N;trans_V;trans_S;trans_F]);
+    SB = sqrt((N_centroid-total_centroid)*(N_centroid-total_centroid)')+...
+         sqrt((V_centroid-total_centroid)*(V_centroid-total_centroid)')+...
+         sqrt((S_centroid-total_centroid)*(S_centroid-total_centroid)')+...
+         sqrt((F_centroid-total_centroid)*(F_centroid-total_centroid)');
+    SW = sqrt(sum(var(trans_N)))+ sqrt(sum(var(trans_V))) + sqrt(sum(var(trans_S)))...
+        + sqrt(sum(var(trans_F)));
+    
+    %cost function and its decomposed terms
+    cost_terms = [range(ll) abs(sum(x)-1) SW/SB SW SB];
+    cost = sum(cost_terms(1:3));
+    
+end
+
