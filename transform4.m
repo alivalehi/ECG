@@ -1,6 +1,7 @@
 close all
 clear all
 test =1;
+
 if test == 1
     mu1 = [1,0,1];
     sigma1 = [1,0.5,1];
