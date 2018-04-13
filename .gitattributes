@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 *.mlx -crlf -diff -merge
 *.mat -crlf -diff -merge
 *.fig -crlf -diff -merge
 *.p -crlf -diff -merge
 *.slx -crlf -diff -merge
 *.mdl -crlf -diff -merge
+=======
+*.slx -crlf -diff -merge
+*.mdl -crlf -diff -merge
+*.mat -crlf -diff -merge
+*.mlx -crlf -diff -merge
+*.m -crlf -diff -merge
+>>>>>>> abdb0b3f77e7bfc09f36537968ed19c3117d5fe6
