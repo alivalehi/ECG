@@ -4,15 +4,19 @@ function spherical_coord = cart2nsphere(cart)
 % INPUT: a point in cartesian coordinate
 % OUTPUT: the corresponding spherical coordinates (R,phi1, phi2, ....,theta)
 
-D = length(cart);
+D = size(cart,2);
+N = size(cart,1);
+spherical_coord = zeros(N,D);
 
-r = norm(cart);
+for n=1:N
+    r = norm(cart(n,:));
 
-phi = [];
-for i = 1: D-2
-    phi(end+1) = acos(cart(i)/norm(cart(i:D)));
+    phi = [];
+    for i = 1: D-2
+        phi(end+1) = acos(cart(n,i)/norm(cart(n,i:D)));
+    end
+
+    theta = 2* acot( (cart(n,D-1) + norm(cart(n,D-1:D)))/ cart(n,D) );
+
+    spherical_coord(n,:) = [r, phi, theta];
 end
-
-theta = 2* acot( (cart(D-1) + norm(cart(D-1:D)))/ cart(D) );
-
-spherical_coord = [r, phi, theta];
