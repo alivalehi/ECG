@@ -19,25 +19,23 @@ sigma4 = [0.5 ,0.5 ,.5, .5];
 rng default
 data4 = mvnrnd(mu4,sigma4,500);
 
-
+close all
 %Finidng cluster's centroid using kmeans
 
 [~,Cref] = kmeans(data1,1);
-D = size(data1,2)
+D = size(data1,2);
 
 % center the data by substracting Cref
 r1 = data1 - repmat(Cref, size(data1,1), 1);
-r2 = data1 - repmat(Cref, size(data2,1), 1);
-r3 = data1 - repmat(Cref, size(data3,1), 1);
-r4 = data1 - repmat(Cref, size(data4,1), 1);
+r2 = data2 - repmat(Cref, size(data2,1), 1);
+r3 = data3 - repmat(Cref, size(data3,1), 1);
+r4 = data4 - repmat(Cref, size(data4,1), 1);
 % r1 = [data1(:,1) - Cref(1), data1(:,2) - Cref(2), data1(:,3) - Cref(3)];
 % r2 = [data2(:,1) - Cref(1), data2(:,2) - Cref(2), data2(:,3) - Cref(3)];
 % r3 = [data3(:,1) - Cref(1), data3(:,2) - Cref(2), data3(:,3) - Cref(3)];
 % r4 = [data4(:,1) - Cref(1), data4(:,2) - Cref(2), data4(:,3) - Cref(3)];
 
 C1 = zeros(1,D);
-%%%%%%%%%%%%
-%%%%%%%%%%%%MODIFIED UP TO HERE
 [~,C2] = kmeans(r2,1);
 [~,C3] = kmeans(r3,1);
 [~,C4] = kmeans(r4,1);
@@ -51,10 +49,10 @@ scatter3(C4(:,1),C4(:,2),C4(:,3),'k*');
 title('dummy 3-D data','FontSize',14)
 
 %Plot scatter of raw data
-figure;scatter3(r1(:,1),r1(:,2),r1(:,3),'bd');hold on;
-scatter3(r2(:,1),r2(:,2),r2(:,3),'r+');
-scatter3(r3(:,1),r3(:,2),r3(:,3),'co');
-scatter3(r4(:,1),r4(:,2),r4(:,3),'k*');
+figure;scatter3(data1(:,1),data1(:,2),data1(:,3),'bd');hold on;
+scatter3(data2(:,1),data2(:,2),data2(:,3),'r+');
+scatter3(data3(:,1),data3(:,2),data3(:,3),'co');
+scatter3(data4(:,1),data4(:,2),data4(:,3),'k*');
 plot3([C1(1) C2(1)],[C1(2) C2(2)],[C1(3) C2(3)],'r','LineWidth',3);
 plot3([C1(1) C3(1)],[C1(2) C3(2)],[C1(3) C3(3)],'c','LineWidth',3);
 plot3([C1(1) C4(1)],[C1(2) C4(2)],[C1(3) C4(3)],'k','LineWidth',3);
@@ -66,23 +64,25 @@ title('dummy 3-D data Before Transformation')
 %We call gram-schmidt here to find the desired cordinates for each
 %Normal to centroid vector Raw = MAtrix of normal to centroids
 %Cooked = orthognolized
-Raw = [C2(1),C2(2),C2(3);
-       C3(1),C3(2),C3(3);
-       C4(1),C4(2),C4(3)];
+Raw = [C2;
+       C3;
+       C4];
 
 Cooked = Gram_Schmidt(Raw');
 Cooked= Cooked';
 % Convert vector of cluster1 centroid to each cluster's data to polar cordinate
-[azimuth1,elevation1,R1]  = cart2sph(r1(:,1),r1(:,2),r1(:,3));
-[azimuth2,elevation2,R2]  = cart2sph(r2(:,1),r2(:,2),r2(:,3));
-[azimuth3,elevation3,R3]  = cart2sph(r3(:,1),r3(:,2),r3(:,3));
-[azimuth4,elevation4,R4]  = cart2sph(r4(:,1),r4(:,2),r4(:,3));
+ri1  = cart2nsphere(r1);
+ri2  = cart2nsphere(r2);
+ri3  = cart2nsphere(r3);
+ri4  = cart2nsphere(r4);
 
 % Keeep cluster's data in one matrix
-ri1 = [azimuth1,elevation1,R1];
-ri2 = [azimuth2,elevation2,R2];
-ri3 = [azimuth3,elevation3,R3];
-ri4 = [azimuth4,elevation4,R4];
+R1 = ri1(:,1); R2 = ri2(:,1); R3 = ri3(:,1); R4 = ri4(:,1);
+%%%%%%%%%%%%
+%%%%%%%%%%%%MODIFIED UP TO HERE
+% ri2 = [azimuth2,elevation2,R2];
+% ri3 = [azimuth3,elevation3,R3];
+% ri4 = [azimuth4,elevation4,R4];
 
 figure;scatter(ri1(:,1),ri1(:,2),'bd');hold on;
 scatter(ri4(:,1),ri4(:,2),'k*');
