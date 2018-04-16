@@ -23,15 +23,21 @@ data4 = mvnrnd(mu4,sigma4,500);
 %Finidng cluster's centroid using kmeans
 
 [~,Cref] = kmeans(data1,1);
+D = size(data1,2)
 
-% center the data by substracting C1
-r1 = data1 - repmat()
-r1 = [data1(:,1) - Cref(1), data1(:,2) - Cref(2), data1(:,3) - Cref(3)];
-r2 = [data2(:,1) - Cref(1), data2(:,2) - Cref(2), data2(:,3) - Cref(3)];
-r3 = [data3(:,1) - Cref(1), data3(:,2) - Cref(2), data3(:,3) - Cref(3)];
-r4 = [data4(:,1) - Cref(1), data4(:,2) - Cref(2), data4(:,3) - Cref(3)];
+% center the data by substracting Cref
+r1 = data1 - repmat(Cref, size(data1,1), 1);
+r2 = data1 - repmat(Cref, size(data2,1), 1);
+r3 = data1 - repmat(Cref, size(data3,1), 1);
+r4 = data1 - repmat(Cref, size(data4,1), 1);
+% r1 = [data1(:,1) - Cref(1), data1(:,2) - Cref(2), data1(:,3) - Cref(3)];
+% r2 = [data2(:,1) - Cref(1), data2(:,2) - Cref(2), data2(:,3) - Cref(3)];
+% r3 = [data3(:,1) - Cref(1), data3(:,2) - Cref(2), data3(:,3) - Cref(3)];
+% r4 = [data4(:,1) - Cref(1), data4(:,2) - Cref(2), data4(:,3) - Cref(3)];
 
-C1 = [0, 0 ,0];
+C1 = zeros(1,D);
+%%%%%%%%%%%%
+%%%%%%%%%%%%MODIFIED UP TO HERE
 [~,C2] = kmeans(r2,1);
 [~,C3] = kmeans(r3,1);
 [~,C4] = kmeans(r4,1);
