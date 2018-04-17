@@ -1,5 +1,5 @@
 function [ result ] = coefazimuth(X,azfard,azclosed,azfar,azclose)
-method=1;
+method=3;
 if (method==1)
     X = pi2twopi(X);
     azfard = pi2twopi(azfard);
@@ -60,6 +60,17 @@ elseif(method==2)
     totallogit = logitclose*S1+logitfar*S2;
     result = result + totallogit;
     result = twopi2pi(result);
+elseif(method==3)
+    %UNTITLED Summary of this function goes here
+    %   Detailed explanation goes here
+    %add some coede for adjusting range of azimuth which is -pi to pi
+    X = pi2twopi(X);
+    azfard = pi2twopi(azfard);
+    azfar = pi2twopi(azfard);
+    azclosed = pi2twopi(azclosed);
+    azclose = pi2twopi(azclose);
+    result = logit([0,azclose,azfar,2*pi],[0,azclosed,azfard,2*pi],X);
+    result = twopi2pi(result);    
 end
 end
 

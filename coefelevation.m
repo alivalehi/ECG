@@ -1,5 +1,5 @@
 function [ result ] = coefelevation( X ,elfard,elclosed,elfar,elclose)
-method=1;
+method=3;
 if(method==1)
     min_distance = min(min((elclose-0),(elfar-elclose)),(2*pi-elfar));
     knob11=0+min_distance*2/6;
@@ -48,6 +48,8 @@ elseif(method==2)
     S2 = (H(elfar-halfW+alpha,X)-H(elfar-halfW+step-alpha,X));
     totallogit = logitclose*S1+logitfar*S2;
     result = result + totallogit;
+elseif(method==3)
+  result = logit([0,elclose,elfar,2*pi],[0,elclosed,elfard,2*pi],X);
 end
 end
 
