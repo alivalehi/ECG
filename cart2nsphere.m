@@ -10,6 +10,10 @@ spherical_coord = zeros(N,D);
 
 for n=1:N
     r = norm(cart(n,:));
+    % in case all zeros (origin)
+    if r == 0
+        break;
+    end
 
     phi = [];
     for i = 1: D-2
@@ -28,6 +32,11 @@ for n=1:N
     
     % theta is equal to elevation in 3-D
     if  norm(cart(n,D-1:D)) > 0
+%         if cart(n,D) >= 0
+%             theta = acos(cart(n,D-1)/norm(cart(n,D-1:D)));
+%         else
+%             theta = -acos(cart(n,D-1)/norm(cart(n,D-1:D)));
+%         end
         theta = 2* acot( (cart(n,D-1) + norm(cart(n,D-1:D)))/ cart(n,D) );
     else
         theta = 0;
