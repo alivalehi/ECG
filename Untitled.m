@@ -104,10 +104,12 @@ raw_C2 = cart2nsphere(C2);
 raw_C3 = cart2nsphere(C3);
 raw_C4 = cart2nsphere(C4);
 
-phi1_2_ref = ri1(:,p) - raw_C2(p);
-phi2_2_ref = ri2(:,p) - raw_C2(p);
-phi3_2_ref = ri3(:,p) - raw_C2(p);
-phi4_2_ref = ri4(:,p) - raw_C2(p);
+
+% looping through angle and calculate difference to reference cluster (C2 here)
+phi1_2_ref = zeros(size(phi1,1),size(phi1,2));
+phi2_2_ref = zeros(size(phi1,1),size(phi1,2));
+phi3_2_ref = zeros(size(phi1,1),size(phi1,2));
+phi4_2_ref = zeros(size(phi1,1),size(phi1,2));
 
 for p = 2:length(ortho_C2)-1
 %%%%%%%%%%%%
@@ -131,32 +133,18 @@ phi_far_d = max([ortho_C3(p) - ortho_C2(p), ortho_C4(p) - ortho_C2(p)]);
 % mtia2 = ri2(:,1)- azimuthCi2;
 % mtia3 = ri3(:,1)- azimuthCi2;
 % mtia4 = ri4(:,1)- azimuthCi2;
-phi1_2_ref = ri1(:,p) - raw_C2(p);
-phi2_2_ref = ri2(:,p) - raw_C2(p);
-phi3_2_ref = ri3(:,p) - raw_C2(p);
-phi4_2_ref = ri4(:,p) - raw_C2(p);
+phi1_2_ref(:,p) = ri1(:,p) - raw_C2(p);
+phi2_2_ref(:,p)  = ri2(:,p) - raw_C2(p);
+phi3_2_ref(:,p)  = ri3(:,p) - raw_C2(p);
+phi4_2_ref(:,p)  = ri4(:,p) - raw_C2(p);
 
 %%%%%%%%%%%%
 %%%%%%%%%%%%MODIFIED UP TO HERE (to be tested)
 
 
 end
-%Elevation angle between the cluster's centroid to the vector which connect refrence
-%centroid (here C2) to the normal centroid (here C1)
-elclose = elevationCi3-elevationCi2;%acos(1-pdist2([0 C4(2) C4(3)],[0 C2(2) C2(3)],'cosine'))
-elfar = elevationCi4-elevationCi2;%acos(1-pdist2([0 C3(2) C3(3)],[0 C2(2) C2(3)],'cosine'))
 
-%Desired elevation angle between the cluster's centroid to the vector which connect refrence
-%centroid (here C2) to the normal centroid (here C1)
-elclosed =  elevationC3-elevationC2;%acos(1-pdist2([0 C4(2) C4(3)],[0 C2(2) C2(3)],'cosine'))
-elfard =elevationC4-elevationC2;%acos(1-pdist2([0 C3(2) C3(3)],[0 C2(2) C2(3)],'cosine'))
-
-%Elevation angle between the all data to the vector which connect refrence
-%centroid (here C2) to the normal centroid (here C1)
-mtit1 = ri1(:,2)- elevationC2;
-mtit2 = ri2(:,2)- elevationC2;
-mtit3 = ri3(:,2)- elevationC2;
-mtit4 = ri4(:,2)- elevationC2;
+% Last angle has a different range
 
 %ALi: I think the azimuth raqnge is -pi:pi and the eleveation range is
 %0:2pi there are two functions for converting twopi2pi and pitotwopi. Good
