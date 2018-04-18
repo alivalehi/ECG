@@ -65,8 +65,8 @@ if test == 1
     %Normal to centroid vector Raw = MAtrix of normal to centroids
     %Cooked = orthognolized
     Raw = [C2(1),C2(2),C2(3);
-        C3(1),C3(2),C3(3);
-        C4(1),C4(2),C4(3)];
+           C3(1),C3(2),C3(3);
+           C4(1),C4(2),C4(3)];
     
     Cooked = Gram_Schmidt(Raw');
     Cooked= Cooked';
@@ -81,24 +81,22 @@ if test == 1
     ri2 = [azimuth2,elevation2,R2];
     ri3 = [azimuth3,elevation3,R3];
     ri4 = [azimuth4,elevation4,R4];
-    
-    figure;scatter(ri1(:,1),ri1(:,2),'bd');hold on;
-    scatter(ri4(:,1),ri4(:,2),'k*');
+
     %The matrix Contains  all data in polar
     r = [azimuth1,elevation1,R1;
-        azimuth2,elevation2,R2;
-        azimuth3,elevation3,R3;
-        azimuth4,elevation4,R4];
+         azimuth2,elevation2,R2;
+         azimuth3,elevation3,R3;
+         azimuth4,elevation4,R4];
     
     % The matrix Contains  all data in Cartesian
     [car(:,1),car(:,2),car(:,3)]  = sph2cart(r(:,1),r(:,2),r(:,3));
     
-    %polar cordinates of the point which connected to normal centroid(C1)
+    %polar cordinates of the orthogonolized points 
     [azimuthC2,elevationC2,~]  = cart2sph(Cooked(1,1),Cooked(1,2),Cooked(1,3));
     [azimuthC3,elevationC3,~]  = cart2sph(Cooked(2,1),Cooked(2,2),Cooked(2,3));
     [azimuthC4,elevationC4,~]  = cart2sph(Cooked(3,1),Cooked(3,2),Cooked(3,3));
     
-    %polar cordinates of the orthogonolized points
+    %polar cordinates of the point which connected to normal centroid(C1)
     [azimuthCi1,elevationCi1,~]  = cart2sph(C1(1),C1(2),C1(3));
     [azimuthCi2,elevationCi2,~]  = cart2sph(C2(1),C2(2),C2(3));
     [azimuthCi3,elevationCi3,~]  = cart2sph(C3(1),C3(2),C3(3));
@@ -107,11 +105,11 @@ if test == 1
     %Azimuth angle between the cluster's centroid to the vector which connect refrence
     %centroid (here C2) to the normal centroid (here C1)
     azclose = azimuthCi3 - azimuthCi2;
-    azfar = azimuthCi4 - azimuthCi2;
+    azfar   = azimuthCi4 - azimuthCi2;
     %Desired azimuth angle between the cluster's centroid to the vector which connect refrence
     %centroid (here C2) to the normal centroid (here C1)
     azclosed = azimuthC3 - azimuthC2;
-    azfard = azimuthC4 - azimuthC2;
+    azfard   = azimuthC4 - azimuthC2;
     %Azimuth angle between the all data to the vector which connect refrence
     %centroid (here C2) to the normal centroid (here C1)
     mtia1 = ri1(:,1)- azimuthCi2;
@@ -122,12 +120,12 @@ if test == 1
     %Elevation angle between the cluster's centroid to the vector which connect refrence
     %centroid (here C2) to the normal centroid (here C1)
     elclose = elevationCi3-elevationCi2;%acos(1-pdist2([0 C4(2) C4(3)],[0 C2(2) C2(3)],'cosine'))
-    elfar = elevationCi4-elevationCi2;%acos(1-pdist2([0 C3(2) C3(3)],[0 C2(2) C2(3)],'cosine'))
+    elfar   = elevationCi4-elevationCi2;%acos(1-pdist2([0 C3(2) C3(3)],[0 C2(2) C2(3)],'cosine'))
     
     %Desired elevation angle between the cluster's centroid to the vector which connect refrence
     %centroid (here C2) to the normal centroid (here C1)
-    elclosed =  elevationC3-elevationC2;%acos(1-pdist2([0 C4(2) C4(3)],[0 C2(2) C2(3)],'cosine'))
-    elfard =elevationC4-elevationC2;%acos(1-pdist2([0 C3(2) C3(3)],[0 C2(2) C2(3)],'cosine'))
+    elclosed = elevationC3-elevationC2;%acos(1-pdist2([0 C4(2) C4(3)],[0 C2(2) C2(3)],'cosine'))
+    elfard   = elevationC4-elevationC2;%acos(1-pdist2([0 C3(2) C3(3)],[0 C2(2) C2(3)],'cosine'))
     
     %Elevation angle between the all data to the vector which connect refrence
     %centroid (here C2) to the normal centroid (here C1)
@@ -143,17 +141,17 @@ if test == 1
     % AX2 = cross([0 C4(2) C4(3)],[0 C2(2) C2(3)]);
     % orig = r1;
     
-    %         %Tsting put only centroids
-    %
-    %         mtia1 = ones(1,length(mtit2))* azimuthCi1 - azimuthCi1;
-    %         mtia2 = ones(1,length(mtit2))* azimuthCi2 - azimuthCi2;
-    %         mtia3 = ones(1,length(mtit3))* azimuthCi3 - azimuthCi2;
-    %         mtia4 = ones(1,length(mtit4))* azimuthCi4 - azimuthCi2;
-    %
-    %
-    %         mtit2 = ones(1,length(mtia2))* elevationCi2 - elevationCi2;
-    %         mtit3 = ones(1,length(mtia3))* elevationCi3 - elevationCi2;
-    %         mtit4 = ones(1,length(mtia4))* elevationCi4 - elevationCi2;
+%             %Tsting put only centroids
+%     
+%             mtia1 = ones(1,length(mtit2))* azimuthCi1 - azimuthCi2;
+%             mtia2 = ones(1,length(mtit2))* azimuthCi2 - azimuthCi2;
+%             mtia3 = ones(1,length(mtit3))* azimuthCi3 - azimuthCi2;
+%             mtia4 = ones(1,length(mtit4))* azimuthCi4 - azimuthCi2;
+%     
+%             mtit1 = ones(1,length(mtia1))* elevationCi1 - elevationCi2;
+%             mtit2 = ones(1,length(mtia2))* elevationCi2 - elevationCi2;
+%             mtit3 = ones(1,length(mtia3))* elevationCi3 - elevationCi2;
+%             mtit4 = ones(1,length(mtia4))* elevationCi4 - elevationCi2;
     
     %Transformation function
     
@@ -218,18 +216,16 @@ if test == 1
     %    %################################################
     %    %
     %    %################################################
-    aliranage =  range(ri1(:,3));
+
     for i=1:length(ri1(:,2))
-        %                 ri1(i,:) = script_roation( C2-C1,sph2cart(ri1(i,1),ri1(i,2),ri1(i,3))-C1, coefazimuth(mtia1(i)), coefelevation(mtit1(i))) + C1;
-        %         ri2(i,:) = script_roation( C2-C1,sph2cart(ri2(i,1),ri2(i,2),ri2(i,3))-C1, coefazimuth(mtia2(i)), coefelevation(mtit2(i))) + C1;
-        ri1(i,:) = script_roation( r1(i,:), coefazimuth(mtia1(i),azfard,azclosed,azfar,azclose), coefelevation(mtit1(i),elfard,elclosed,elfar,elclose));
-        ri2(i,:) = script_roation( r2(i,:), coefazimuth(mtia2(i),azfard,azclosed,azfar,azclose), coefelevation(mtit2(i),elfard,elclosed,elfar,elclose));
-        ri3(i,:) = script_roation( r3(i,:), coefazimuth(mtia3(i),azfard,azclosed,azfar,azclose), coefelevation(mtit3(i),elfard,elclosed,elfar,elclose));
-        ri4(i,:) = script_roation( r4(i,:), coefazimuth(mtia4(i),azfard,azclosed,azfar,azclose), coefelevation(mtit4(i),elfard,elclosed,elfar,elclose));
+        ri1(i,:) = script_roation( ri1(i,:), coefazimuth(mtia1(i),azfard,azclosed,azfar,azclose), coefelevation(mtit1(i),elfard,elclosed,elfar,elclose));
+        ri2(i,:) = script_roation( ri2(i,:), coefazimuth(mtia2(i),azfard,azclosed,azfar,azclose), coefelevation(mtit2(i),elfard,elclosed,elfar,elclose));
+        ri3(i,:) = script_roation( ri3(i,:), coefazimuth(mtia3(i),azfard,azclosed,azfar,azclose), coefelevation(mtit3(i),elfard,elclosed,elfar,elclose));
+        ri4(i,:) = script_roation( ri4(i,:), coefazimuth(mtia4(i),azfard,azclosed,azfar,azclose), coefelevation(mtit4(i),elfard,elclosed,elfar,elclose));
     end
     acosd(1-pdist2(ri4(1,:),C2,'cosine'));
     [idx1,C1i] = kmeans(ri1,1);
-    [idx2,C2i] = kmeans(ri2,1);
+ %   [idx2,C2i] = kmeans(ri2,1);
     [idx3,C3i] = kmeans(ri3,1);
     [idx4,C4i] = kmeans(ri4,1);
     finalr = [ri1',ri2',ri3',ri4'];
@@ -237,23 +233,7 @@ if test == 1
     normImage = uint8(255*mat2gray(finalrdot));
     figure
     imshow(normImage);
-    
-    %  acosd(1-pdist2(C3i-C1i,C2i-C1i,'cosine'))
-    % acosd(1-pdist2(C4i-C1i,C2i-C1i,'cosine'))
-    
-    %     figure;scatter3(ri1(:,1),ri1(:,2),ri1(:,3),'bd');hold on;
-    %     scatter3(ri2(:,1),ri2(:,2),ri2(:,3),'r+');
-    
-    %     mu3 = ri3(1,:);
-    %     sigma3 = [1,0.5,1];
-    %     rng default
-    %     ri3 = mvnrnd(mu3,sigma3,500);
-    %
-    %
-    %     mu4 = ri4(1,:);
-    %     sigma4 = [0.5,1,1];
-    %     rng default
-    %     ri4 = mvnrnd(mu4,sigma4,500);
+
     [~,~,alir1] = cart2sph(ri1(:,1),ri1(:,2),ri1(:,3));
     [~,~,alir2] = cart2sph(ri2(:,1),ri2(:,2),ri2(:,3));
     figure;scatter3(ri1(:,1),ri1(:,2),ri1(:,3),'bd');hold on;

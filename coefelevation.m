@@ -1,5 +1,5 @@
 function [ result ] = coefelevation( X ,elfard,elclosed,elfar,elclose)
-method=3;
+method=2;
 if(method==1)
     min_distance = min(min((elclose-0),(elfar-elclose)),(2*pi-elfar));
     knob11=0+min_distance*2/6;
