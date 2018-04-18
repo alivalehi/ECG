@@ -218,7 +218,7 @@ if test == 1
     %    %################################################
     %    %
     %    %################################################
-    aliranage =  range(ri1(:,3));
+
     for i=1:length(ri1(:,2))
         %                 ri1(i,:) = script_roation( C2-C1,sph2cart(ri1(i,1),ri1(i,2),ri1(i,3))-C1, coefazimuth(mtia1(i)), coefelevation(mtit1(i))) + C1;
         %         ri2(i,:) = script_roation( C2-C1,sph2cart(ri2(i,1),ri2(i,2),ri2(i,3))-C1, coefazimuth(mtia2(i)), coefelevation(mtit2(i))) + C1;
