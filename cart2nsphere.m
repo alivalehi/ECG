@@ -44,3 +44,8 @@ for n=1:N
 
     spherical_coord(n,:) = [r, phi, theta];
 end
+
+
+%%%%% test code
+%cart2nsphere([0,0,-1])
+%[az,el,r] = cart2sph(0,0,-1)
