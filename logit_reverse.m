@@ -1,4 +1,4 @@
-function [ result ] = logit_reverse( current,desired,xrange)
+function [ result ] = logit( current,desired,xrange)
 %The following for is responsible to add middle point which are required points for the logit
 test=0;
 if(test==1)
@@ -35,8 +35,8 @@ Si = abs(H(0,xrange)-H(Xb,xrange));
 for i = 1:(length(desired)-2)
     Xa = X(i);
     Xb = X(i+1);
-    Ya = Y(i+1);
-    Yb = Y(i);
+    Ya = Y(i);
+    Yb = Y(i+1);
     Yo = desired(i+1);
     Xo = current(i+1);
     

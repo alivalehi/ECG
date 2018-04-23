@@ -12,15 +12,16 @@ for n = 1:N
     r = sphe(n,1);
     phi = sphe(n,2:end);
 
-    X = [r*cos(sphe(2))];
-    for i = 1: D-2
+    X = [r*cos(sphe(n,2))];
+    x=r;
+    for i = 2: D-1
         x = r;
         for j = 1:i-1
             x = x*sin(phi(j));
         end
         X(end+1) = x * cos(phi(i));
     end
-
+    x = r;
     for j = 1:D-1
         x = x*sin(phi(j));
     end
