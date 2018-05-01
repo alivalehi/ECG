@@ -55,6 +55,7 @@ for j=1:length(sph_all)
    ali(j,:) = ali(j,:)./ norm(ali(j,:));
 end
 car_all =ali;
+
 finalr = car_all;%[ri1',ri2',ri3',ri4'];
 finalrdot = finalr*finalr';
 normImage = uint8(255*mat2gray(finalrdot));
